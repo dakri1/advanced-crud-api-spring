@@ -17,10 +17,11 @@ public class PostController {
         this.postService = postService;
     }
 
-    @PostMapping
-    public Post create(@RequestBody Post post){
+    @PostMapping()
+    public Post createPost(@RequestBody Post post){
         return postService.createPost(post); // Post or null
     }
+
     @GetMapping
     public List<Post> getAll (){
         return postService.getAllPosts(); // Posts or null
@@ -31,9 +32,20 @@ public class PostController {
         return postService.getOnePost(id); // Post or null
     }
 
+    @GetMapping("/category/search/{id}")
+    public List<Post> searchPostByCategoryId(@PathVariable Long id){
+        return postService.searchPostByCategory(id);// Posts or []
+    }
+
+
     @PutMapping
     public Post updatePost(@RequestBody Post post){
         return postService.update(post); // Update post or null
+    }
+
+    @GetMapping("/tags/search/")
+    public List<Post> searchByTagsName(@RequestParam("tags") List<String> tagNames){
+        return postService.searchPostByTags(tagNames); // Posts or []
     }
 
     @DeleteMapping("/{id}")

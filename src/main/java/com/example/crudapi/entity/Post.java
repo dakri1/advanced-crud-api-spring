@@ -1,6 +1,9 @@
 package com.example.crudapi.entity;
 
+
 import jakarta.persistence.*;
+
+import java.util.Set;
 
 @Entity
 @Table(name = "posts")
@@ -14,6 +17,16 @@ public class Post {
 
     @Column(name = "body", length = 1000)
     private String body;
+
+    @ManyToOne
+    @JoinColumn(name = "category")
+    private Category category;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "post_tags",
+            joinColumns = { @JoinColumn(name = "post_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "tag_id", referencedColumnName = "id")})
+    private Set<Tag> tags;
 
 
     public Post() {
@@ -43,4 +56,19 @@ public class Post {
         this.body = body;
     }
 
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public Set<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
+    }
 }

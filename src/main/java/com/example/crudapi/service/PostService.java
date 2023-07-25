@@ -20,8 +20,9 @@ public class PostService {
             return postRepo.save(post);
     }
     public List<Post> getAllPosts(){
-        return (List<Post>) postRepo.findAll();
+        return postRepo.findAll();
     }
+
     public Optional<Post> getOnePost(Long id){
             return postRepo.findById(id);
         }
@@ -31,6 +32,14 @@ public class PostService {
             return postRepo.save(post);
         }
         return null;
+    }
+
+    public List<Post> searchPostByCategory(Long id){
+        return postRepo.findByCategoryId(id);
+    }
+
+    public List<Post> searchPostByTags(List<String> tags){
+        return postRepo.findByTagsNameIn(tags);
     }
 
     public HttpStatus delete(Long id){
